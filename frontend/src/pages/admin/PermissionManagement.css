@@ -1,0 +1,161 @@
+.permission-management {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.permissions-table-card {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.permissions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.permissions-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.permissions-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.permissions-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.permissions-table tbody tr:hover {
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.resource-badge,
+.action-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+  font-weight: 500;
+}
+
+.resource-badge {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.action-badge {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.empty-state {
+  padding: 48px;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+}
+
+.error-message {
+  padding: 16px;
+  background: #fee;
+  color: #c33;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+

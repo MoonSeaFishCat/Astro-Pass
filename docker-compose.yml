@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: astro-pass-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: astro_pass
+      MYSQL_USER: astropass
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - astro-pass-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: astro-pass-backend
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 8080
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: astropass
+      DB_PASSWORD: password
+      DB_NAME: astro_pass
+      JWT_SECRET: your-secret-key-change-in-production-min-32-chars
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./backend/logs:/root/logs
+    networks:
+      - astro-pass-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: astro-pass-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - astro-pass-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  astro-pass-network:
+    driver: bridge
+
+

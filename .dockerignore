@@ -1,0 +1,38 @@
+# Git
+.git
+.gitignore
+
+# Node
+node_modules
+npm-debug.log
+pnpm-debug.log
+
+# Go
+*.exe
+*.test
+*.out
+vendor/
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# Build
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+

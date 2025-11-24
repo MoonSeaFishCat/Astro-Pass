@@ -1,0 +1,92 @@
+/* 星穹通行证 - 二次元学院治愈系风格 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 核心配色 - 马卡龙治愈色系 */
+  --color-primary: #AEC6E4;      /* 星穹蓝 */
+  --color-secondary: #B5EAD7;   /* 薄荷绿 */
+  --color-background: #F7F7F7;   /* 云朵白 */
+  --color-card: #FFFFFF;
+  --color-text: #4A4A4A;
+  --color-text-light: #8A8A8A;
+  --color-border: #E0E0E0;
+  --color-shadow: rgba(174, 198, 228, 0.15);
+  --color-success: #B5EAD7;
+  --color-error: #FFB3BA;
+  --color-warning: #FFDFBA;
+
+  /* 圆角 */
+  --radius-small: 8px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+
+  /* 阴影 */
+  --shadow-small: 0 2px 8px var(--color-shadow);
+  --shadow-medium: 0 4px 16px var(--color-shadow);
+  --shadow-large: 0 8px 24px var(--color-shadow);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(135deg, #F7F7F7 0%, #E8F4F8 100%);
+  color: var(--color-text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9BB5D1;
+}
+
+/* 按钮基础样式 */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* 输入框基础样式 */
+input, textarea {
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* 链接样式 */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #9BB5D1;
+}
+
+

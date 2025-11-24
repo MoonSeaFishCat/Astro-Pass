@@ -1,0 +1,197 @@
+.role-management {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.role-card {
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.role-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.role-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #667eea;
+  margin: 0;
+}
+
+.role-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.role-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  min-width: 60px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #333;
+}
+
+.error-message {
+  padding: 16px;
+  background: #fee;
+  color: #c33;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content.large {
+  max-width: 700px;
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.permissions-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 16px 0;
+}
+
+.permission-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  gap: 12px;
+}
+
+.permission-item:last-child {
+  border-bottom: none;
+}
+
+.permission-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+.permission-resource {
+  font-size: 12px;
+  color: #666;
+  font-family: monospace;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+

@@ -1,0 +1,255 @@
+.user-dashboard-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c8be5 0%, #9db7ff 60%, #cfe0ff 100%);
+  padding: 32px;
+}
+
+.user-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 24px;
+}
+
+.user-sidebar {
+  flex: 0 0 280px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 45px rgba(91, 116, 188, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-summary-card {
+  text-align: center;
+}
+
+.avatar-circle {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7f9cf5 0%, #b4c6ff 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.user-meta {
+  margin-bottom: 12px;
+}
+
+.meta-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2f365f;
+}
+
+.meta-sub {
+  font-size: 14px;
+  color: #6b779e;
+  margin-top: 4px;
+}
+
+.admin-link button {
+  margin-top: 12px;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-menu button {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: rgba(132, 164, 255, 0.18);
+  color: #3450a1;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sidebar-menu button:hover {
+  background: rgba(132, 164, 255, 0.32);
+  transform: translateX(4px);
+}
+
+.menu-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.menu-hint {
+  font-size: 12px;
+  color: #6b779e;
+  margin-top: 2px;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.user-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.user-section {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 25px 50px rgba(96, 118, 176, 0.15);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #2d3a6b;
+}
+
+.section-header p {
+  margin: 6px 0 0;
+  color: #6f7aa9;
+}
+
+.section-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.section-card {
+  background: rgba(247, 249, 255, 0.9);
+  border: none;
+  box-shadow: none;
+}
+
+.profile-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.info-item {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: inset 0 0 0 1px rgba(132, 148, 194, 0.15);
+}
+
+.info-label {
+  display: block;
+  font-size: 12px;
+  color: #8a94b2;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.info-value {
+  font-size: 16px;
+  color: #2d3a6b;
+  font-weight: 600;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.status-label {
+  color: #6f7aa9;
+  font-weight: 500;
+}
+
+.status-value {
+  color: #2d8a72;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #d97706;
+}
+
+.tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  color: #556091;
+  line-height: 1.7;
+}
+
+.tips-list li {
+  padding: 4px 0;
+}
+
+.card-description {
+  color: #6f7aa9;
+  line-height: 1.7;
+}
+
+.session-highlight {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 14px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: inset 0 0 0 1px rgba(132, 148, 194, 0.15);
+}
+
+.session-title {
+  font-weight: 600;
+  color: #2d3a6b;
+}
+
+.session-meta {
+  font-size: 13px;
+  color: #7a86b0;
+  margin-top: 4px;
+}
+
+@media (max-width: 992px) {
+  .user-layout {
+    flex-direction: column;
+  }
+
+  .user-sidebar {
+    flex: unset;
+  }
+
+  .section-header {
+    flex-direction: column;
+  }
+
+  .section-actions {
+    width: 100%;
+  }
+}
+

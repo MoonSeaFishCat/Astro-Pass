@@ -1,0 +1,174 @@
+.mfa-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #F7F7F7 0%, #E8F4F8 50%, #F0F8F4 100%);
+}
+
+.mfa-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.mfa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.mfa-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-shadow: 0 2px 8px var(--color-shadow);
+}
+
+.mfa-card {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mfa-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mfa-step-header {
+  text-align: center;
+}
+
+.mfa-step-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.mfa-description {
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: white;
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-small);
+}
+
+.secret-container {
+  text-align: center;
+  padding: 16px;
+  background: var(--color-background);
+  border-radius: var(--radius-medium);
+}
+
+.secret-label {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin-bottom: 8px;
+}
+
+.secret-code {
+  display: block;
+  font-size: 16px;
+  font-family: 'Courier New', monospace;
+  color: var(--color-primary);
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 8px;
+  background: white;
+  border-radius: var(--radius-small);
+}
+
+.mfa-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.error-message {
+  padding: 12px 16px;
+  background: rgba(255, 179, 186, 0.2);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-medium);
+  color: #D32F2F;
+  font-size: 14px;
+  text-align: center;
+}
+
+.success-message {
+  text-align: center;
+  padding: 24px;
+  background: rgba(181, 234, 215, 0.2);
+  border: 2px solid var(--color-success);
+  border-radius: var(--radius-medium);
+}
+
+.success-message h2 {
+  font-size: 24px;
+  color: #2E7D32;
+  margin-bottom: 8px;
+}
+
+.success-message p {
+  color: #2E7D32;
+}
+
+.recovery-codes-container {
+  padding: 24px;
+  background: var(--color-background);
+  border-radius: var(--radius-medium);
+  border: 2px dashed var(--color-primary);
+}
+
+.recovery-codes-container h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.recovery-codes-hint {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.recovery-codes-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.recovery-code {
+  display: block;
+  padding: 12px;
+  background: white;
+  border-radius: var(--radius-small);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+

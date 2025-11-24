@@ -1,0 +1,90 @@
+# 环境变量文件
+.env
+.env.local
+.env.*.local
+
+# 日志文件
+*.log
+logs/
+*.log.*
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 临时文件
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE 配置
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# 编译输出
+dist/
+build/
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go 特定
+*.test
+*.out
+vendor/
+
+# Node.js 特定
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# 前端构建输出
+frontend/dist/
+frontend/.vite/
+
+# 后端构建输出
+backend/bin/
+backend/*.exe
+
+# 测试覆盖率
+coverage/
+*.coverprofile
+
+# 依赖目录
+vendor/
+
+# 密钥和敏感文件
+*.key
+*.pem
+*.crt
+secrets/
+*.secret
+
+# 备份文件
+*.bak
+*.backup
+*~
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+

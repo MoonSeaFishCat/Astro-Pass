@@ -1,0 +1,143 @@
+.permissions-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #F7F7F7 0%, #E8F4F8 50%, #F0F8F4 100%);
+}
+
+.permissions-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.permissions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.permissions-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-shadow: 0 2px 8px var(--color-shadow);
+}
+
+.permissions-card {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  padding: 12px 16px;
+  background: rgba(255, 179, 186, 0.2);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-medium);
+  color: #D32F2F;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-light);
+}
+
+.empty-state .hint {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--color-text-light);
+}
+
+.roles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.role-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-background);
+  border-radius: var(--radius-medium);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+.role-item:hover {
+  box-shadow: var(--shadow-small);
+  transform: translateY(-2px);
+}
+
+.role-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.role-info {
+  flex: 1;
+}
+
+.role-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.role-description {
+  font-size: 14px;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.role-id {
+  font-size: 12px;
+  color: var(--color-text-light);
+  font-family: 'Courier New', monospace;
+  padding: 4px 8px;
+  background: var(--color-card);
+  border-radius: var(--radius-small);
+  display: inline-block;
+}
+
+.card-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+
+.permissions-info {
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.permissions-info p {
+  margin-bottom: 12px;
+}
+
+.permissions-info .hint {
+  font-size: 14px;
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
+

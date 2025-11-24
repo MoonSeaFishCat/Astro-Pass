@@ -1,0 +1,54 @@
+# 服务器配置
+SERVER_HOST=localhost
+SERVER_PORT=8080
+SERVER_MODE=debug
+
+# 数据库配置（必填）
+DB_HOST=156.226.176.148
+DB_PORT=3306
+DB_USER=xqtxz
+DB_PASSWORD=eELxWMspTxFD3a5C
+DB_NAME=xqtxz
+DB_CHARSET=utf8mb4
+DB_PARSE_TIME=true
+DB_LOC=Local
+
+# Redis 配置（可选）
+REDIS_HOST=
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_DB=0
+
+# JWT 配置（必填）
+JWT_SECRET=your-secret-key-change-in-production-min-32-chars
+JWT_ACCESS_TOKEN_EXPIRE=15m
+JWT_REFRESH_TOKEN_EXPIRE=168h
+
+# OAuth2 配置
+OAUTH2_AUTHORIZATION_CODE_EXPIRE=10m
+OAUTH2_ACCESS_TOKEN_EXPIRE=15m
+OAUTH2_REFRESH_TOKEN_EXPIRE=168h
+
+# 应用配置
+APP_NAME=星穹通行证
+APP_URL=http://localhost:8080
+FRONTEND_URL=http://localhost:3000
+
+# SMTP 邮件配置（可选）
+SMTP_HOST=
+SMTP_PORT=587
+SMTP_USER=
+SMTP_PASSWORD=
+SMTP_FROM=星穹通行证 <noreply@astro-pass.com>
+
+# 社交媒体登录配置（可选）
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+# WebAuthn 配置（可选）
+WEBAUTHN_RP_ID=localhost
+WEBAUTHN_RP_ORIGIN=http://localhost:3000
+WEBAUTHN_RP_DISPLAY_NAME=星穹通行证
+
+# MFA 配置（可选）
+MFA_ISSUER=星穹通行证

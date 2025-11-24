@@ -1,0 +1,99 @@
+# ============================================
+# 星穹通行证后端配置文件模板 (YAML格式)
+# ============================================
+# 使用方法：
+# 1. 复制此文件为 config.yaml: cp config.yaml.example config.yaml
+# 2. 根据实际情况修改配置值
+# 3. 注意：config.yaml 文件不应提交到 Git
+# ============================================
+
+# 服务器配置
+server:
+  host: localhost        # 服务器监听地址（0.0.0.0 表示监听所有网络接口）
+  port: 8080            # 服务器监听端口
+  mode: debug            # 运行模式：debug（开发）| release（生产）| test（测试）
+
+# 数据库配置（必填）
+database:
+  host: localhost        # 数据库主机地址
+  port: 3306            # 数据库端口
+  user: root            # 数据库用户名
+  password: your_password_here  # 数据库密码
+  name: astro_pass      # 数据库名称
+  charset: utf8mb4      # 字符集
+  parse_time: true      # 是否解析时间
+  loc: Local            # 时区
+
+# Redis 配置（可选）
+redis:
+  host: ""              # Redis 主机地址（留空则禁用 Redis）
+  port: 6379            # Redis 端口
+  password: ""          # Redis 密码（留空表示无密码）
+  db: 0                 # Redis 数据库编号
+
+# JWT 配置（必填）
+jwt:
+  secret: your-secret-key-change-in-production-min-32-chars  # JWT 密钥（必须至少32字符）
+  access_token_expire: 15m    # 访问令牌过期时间（格式：15m, 1h, 24h 等）
+  refresh_token_expire: 168h  # 刷新令牌过期时间（格式：168h, 7d 等）
+
+# OAuth2 配置
+oauth2:
+  authorization_code_expire: 10m  # 授权码过期时间
+  access_token_expire: 15m       # 访问令牌过期时间
+  refresh_token_expire: 168h     # 刷新令牌过期时间
+
+# 应用配置
+app:
+  name: 星穹通行证              # 应用名称
+  url: http://localhost:8080    # 应用后端URL（用于生成链接等）
+  frontend_url: http://localhost:3000  # 前端应用URL（用于CORS等）
+
+# SMTP 邮件配置（可选）
+smtp:
+  host: ""                      # SMTP 服务器地址（留空则禁用邮件功能）
+  port: 587                     # SMTP 端口（通常为 587 或 465）
+  user: ""                      # SMTP 用户名
+  password: ""                  # SMTP 密码
+  from: "星穹通行证 <noreply@astro-pass.com>"  # 发件人邮箱地址和名称
+
+# 社交媒体登录配置（可选）
+social_auth:
+  github:
+    client_id: ""        # GitHub OAuth Client ID
+    client_secret: ""    # GitHub OAuth Client Secret
+    # 获取方式：https://github.com/settings/developers
+
+# WebAuthn 配置（可选）
+webauthn:
+  rp_id: localhost                    # Relying Party ID（依赖方ID，通常是域名，不含协议和端口）
+  rp_origin: http://localhost:3000    # Relying Party Origin（依赖方来源，完整URL）
+  rp_display_name: 星穹通行证         # Relying Party Display Name（显示给用户的名称）
+
+# MFA 配置（可选）
+mfa:
+  issuer: 星穹通行证  # TOTP 发行者名称（显示在认证器应用中）
+
+# ============================================
+# 配置说明
+# ============================================
+# 1. 必填项：
+#    - database: host, user, password, name
+#    - jwt: secret（至少32字符）
+#
+# 2. 开发环境最小配置：
+#    - 数据库配置
+#    - JWT secret
+#    - app url 和 frontend_url
+#
+# 3. 生产环境建议：
+#    - 所有配置项都应填写
+#    - 使用强随机密钥（openssl rand -base64 32）
+#    - 设置 server.mode=release
+#    - 配置 HTTPS
+#    - 配置 SMTP 邮件服务
+#
+# 4. 详细配置说明请参考：backend/CONFIG.md
+# ============================================
+
+
