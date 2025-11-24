@@ -191,6 +191,8 @@ func (s *SocialAuthService) getGitHubEmails(accessToken string) ([]GitHubEmail, 
 
 // LinkSocialAccount 关联社交媒体账户
 func (s *SocialAuthService) LinkSocialAccount(userID uint, provider string, providerID string, providerEmail string, accessToken string) error {
+	encryptedToken := utils.EncryptToken(accessToken)
+
 	// 检查是否已关联
 	var existing models.SocialAuth
 	if err := database.DB.Where("user_id = ? AND provider = ?", userID, provider).First(&existing).Error; err == nil {

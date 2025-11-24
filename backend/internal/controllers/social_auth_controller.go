@@ -115,7 +115,7 @@ func (c *SocialAuthController) HandleGitHubCallback(ctx *gin.Context) {
 	}
 
 	// 生成JWT令牌
-	accessToken, err := utils.GenerateAccessToken(user.ID, user.Username, user.Email)
+	jwtAccessToken, err := utils.GenerateAccessToken(user.ID, user.Username, user.Email)
 	if err != nil {
 		utils.ErrorResponse(ctx, http.StatusInternalServerError, "生成访问令牌失败")
 		return
