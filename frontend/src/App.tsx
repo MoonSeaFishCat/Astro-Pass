@@ -21,6 +21,7 @@ import UserManagement from './pages/admin/UserManagement'
 import RoleManagement from './pages/admin/RoleManagement'
 import PermissionManagement from './pages/admin/PermissionManagement'
 import SystemSettings from './pages/admin/SystemSettings'
+import BackupManagement from './pages/admin/BackupManagement'
 import './App.css'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -193,6 +194,16 @@ function App() {
             <AdminRoute>
               <AdminLayout>
                 <SystemSettings />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/backup"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <BackupManagement />
               </AdminLayout>
             </AdminRoute>
           }

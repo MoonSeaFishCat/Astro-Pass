@@ -83,6 +83,8 @@ func AutoMigrate() error {
 		{&models.PasswordPolicy{}, "密码策略表"},
 		{&models.PasswordHistory{}, "密码历史表"},
 		{&models.Notification{}, "通知表"},
+		{&models.BackupRecord{}, "备份记录表"},
+		{&models.SystemConfig{}, "系统配置表"},
 	}
 
 	// 先迁移基础表

@@ -54,6 +54,57 @@ func (s *OAuth2Service) GenerateAuthorizationCode(clientID string, userID uint, 
 	return code, nil
 }
 
+// ClientCredentialsGrant 客户端凭证模式
+func (s *OAuth2Service) ClientCredentialsGrant(clientID, clientSecret, scope string) (*models.AccessToken, error) {
+	// 验证客户端
+	var client models.OAuth2Client
+	if err := database.DB.Where("client_id = ? AND status = ?", clientID, "active").First(&client).Error; err != nil {
+		return nil, errors.New("无效的客户端")
+	}
+
+	// 验证客户端密钥
+	if client.ClientSecret != clientSecret {
+		return nil, errors.New("客户端密钥错误")
+	}
+
+	// 检查是否支持客户端凭证模式
+	var grantTypes []string
+	if err := json.Unmarshal([]byte(client.GrantTypes), &grantTypes); err != nil {
+		return nil, errors.New("客户端配置错误")
+	}
+
+	supportsClientCredentials := false
+	for _, gt := range grantTypes {
+		if gt == "client_credentials" {
+			supportsClientCredentials = true
+			break
+		}
+	}
+
+	if !supportsClientCredentials {
+		return nil, errors.New("客户端不支持client_credentials授权类型")
+	}
+
+	// 生成访问令牌（客户端凭证模式不需要用户ID）
+	accessTokenString, err := utils.GenerateAccessToken(0, "", "")
+	if err != nil {
+		return nil, errors.New("生成访问令牌失败")
+	}
+
+	// 保存访问令牌（UserID为nil）
+	accessToken := &models.AccessToken{
+		Token:          accessTokenString,
+		OAuth2ClientID: client.ID,
+		ClientID:       clientID,
+		UserID:         nil, // 客户端凭证模式没有用户
+		Scope:          scope,
+		ExpiresAt:      time.Now().Add(config.Cfg.OAuth2.AccessTokenExpire),
+	}
+	database.DB.Create(accessToken)
+
+	return accessToken, nil
+}
+
 // ExchangeAuthorizationCode 交换授权码获取令牌
 func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, redirectURI, codeVerifier string) (*models.AccessToken, string, error) {
 	// 查找授权码

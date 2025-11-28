@@ -209,6 +209,36 @@ func SetupRoutes() *gin.Engine {
 			socialAuth.GET("/github/url", socialAuthController.GetGitHubAuthURL)
 			socialAuth.POST("/github/callback", socialAuthController.HandleGitHubCallback)
 		}
+
+		// 备份管理路由（需要管理员权限）
+		backupController := controllers.NewBackupController()
+		backup := api.Group("/admin/backup")
+		backup.Use(middleware.AuthMiddleware())
+		backup.Use(middleware.PermissionMiddleware("backup", "manage"))
+		{
+			backup.POST("", backupController.CreateBackup)
+			backup.GET("", backupController.GetBackupList)
+			backup.GET("/stats", backupController.GetBackupStats)
+			backup.DELETE("/:id", backupController.DeleteBackup)
+			backup.POST("/:id/restore", backupController.RestoreBackup)
+			backup.GET("/:id/download", backupController.DownloadBackup)
+			backup.POST("/clean", backupController.CleanOldBackups)
+		}
+
+		// 系统配置路由（需要管理员权限）
+		systemConfigController := controllers.NewSystemConfigController()
+		systemConfig := api.Group("/admin/config")
+		systemConfig.Use(middleware.AuthMiddleware())
+		systemConfig.Use(middleware.PermissionMiddleware("config", "manage"))
+		{
+			systemConfig.GET("", systemConfigController.GetAllConfigs)
+			systemConfig.GET("/category/:category", systemConfigController.GetConfigsByCategory)
+			systemConfig.PUT("", systemConfigController.UpdateConfig)
+			systemConfig.GET("/backup", systemConfigController.GetBackupConfig)
+			systemConfig.PUT("/backup", systemConfigController.UpdateBackupConfig)
+			systemConfig.GET("/export", systemConfigController.ExportConfigs)
+			systemConfig.POST("/import", systemConfigController.ImportConfigs)
+		}
 	}
 
 	return router

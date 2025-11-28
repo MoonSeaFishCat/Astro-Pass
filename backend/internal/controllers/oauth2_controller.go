@@ -110,10 +110,31 @@ func (c *OAuth2Controller) Token(ctx *gin.Context) {
 	}
 
 	// 验证grant_type
-	if req.GrantType != "authorization_code" && req.GrantType != "refresh_token" {
+	if req.GrantType != "authorization_code" && req.GrantType != "refresh_token" && req.GrantType != "client_credentials" {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"code":    400,
 			"message": "不支持的grant_type",
+		})
+		return
+	}
+
+	if req.GrantType == "client_credentials" {
+		// 客户端凭证模式
+		scope := ctx.PostForm("scope")
+		accessToken, err := c.oauth2Service.ClientCredentialsGrant(req.ClientID, req.ClientSecret, scope)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"code":    400,
+				"message": err.Error(),
+			})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{
+			"access_token": accessToken.Token,
+			"token_type":   "Bearer",
+			"expires_in":   900, // 15分钟
+			"scope":        accessToken.Scope,
 		})
 		return
 	}

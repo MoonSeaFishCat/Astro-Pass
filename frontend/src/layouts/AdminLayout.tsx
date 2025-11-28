@@ -25,6 +25,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { path: '/admin/permissions', icon: '🔐', label: '权限管理' },
     { path: '/admin/audit-logs', icon: '📋', label: '审计日志' },
     { path: '/admin/oauth2-clients', icon: '🔑', label: 'OAuth2客户端' },
+    { path: '/admin/backup', icon: '💾', label: '备份管理' },
     { path: '/admin/settings', icon: '⚙️', label: '系统设置' },
   ]
 

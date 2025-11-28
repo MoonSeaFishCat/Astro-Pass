@@ -96,4 +96,33 @@ type Notification struct {
 	User *User `gorm:"foreignKey:UserID" json:"user,omitempty"`
 }
 
+// BackupRecord 备份记录
+type BackupRecord struct {
+	ID         uint      `gorm:"primaryKey" json:"id"`
+	FileName   string    `gorm:"type:varchar(255);not null" json:"file_name"`
+	FilePath   string    `gorm:"type:varchar(500);not null" json:"file_path"`
+	FileSize   int64     `gorm:"default:0" json:"file_size"`
+	BackupType string    `gorm:"type:varchar(20);not null;index" json:"backup_type"` // manual, auto
+	Status     string    `gorm:"type:varchar(20);not null;index" json:"status"`      // success, failed, in_progress
+	Message    string    `gorm:"type:text" json:"message"`
+	CreatedBy  uint      `gorm:"index" json:"created_by"`
+	CreatedAt  time.Time `gorm:"index" json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+
+	Creator *User `gorm:"foreignKey:CreatedBy" json:"creator,omitempty"`
+}
+
+// SystemConfig 系统配置
+type SystemConfig struct {
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	Key       string    `gorm:"type:varchar(100);uniqueIndex;not null" json:"key"`
+	Value     string    `gorm:"type:text;not null" json:"value"`
+	Type      string    `gorm:"type:varchar(20);not null" json:"type"` // string, number, boolean, json
+	Category  string    `gorm:"type:varchar(50);not null;index" json:"category"` // backup, security, email, etc
+	Label     string    `gorm:"type:varchar(100)" json:"label"`
+	Description string  `gorm:"type:text" json:"description"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
 

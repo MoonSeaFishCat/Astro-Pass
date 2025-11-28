@@ -15,6 +15,10 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/pquerna/otp v1.4.0
 	github.com/prometheus/client_golang v1.20.4
+	github.com/redis/go-redis/v9 v9.0.5
+	github.com/swaggo/files v1.0.1
+	github.com/swaggo/gin-swagger v1.6.0
+	github.com/swaggo/swag v1.16.2
 	golang.org/x/crypto v0.43.0
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/gorm v1.25.5
