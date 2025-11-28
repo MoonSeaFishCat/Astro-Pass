@@ -1,0 +1,179 @@
+.authorized-apps-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.page-header {
+  margin-bottom: 40px;
+}
+
+.page-header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.page-description {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.error-banner {
+  background: #FFE4E4;
+  border: 1px solid #FFB6C1;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  color: #C62828;
+  font-size: 14px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.consents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.consent-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.consent-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.consent-info {
+  flex: 1;
+}
+
+.consent-header {
+  margin-bottom: 16px;
+}
+
+.client-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 4px 0;
+}
+
+.consent-date {
+  font-size: 13px;
+  color: #999;
+}
+
+.consent-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.detail-label {
+  color: #666;
+  margin-right: 8px;
+}
+
+.detail-value {
+  color: #333;
+  font-weight: 500;
+}
+
+.consent-actions {
+  margin-left: 20px;
+}
+
+.btn-revoke {
+  padding: 10px 20px;
+  background: #FFE4E4;
+  color: #C62828;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.btn-revoke:hover {
+  background: #FFB6C1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.4);
+}
+
+.loading {
+  text-align: center;
+  padding: 80px 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .authorized-apps-page {
+    padding: 20px 16px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .page-description {
+    font-size: 14px;
+  }
+
+  .consent-card {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .consent-actions {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .btn-revoke {
+    width: 100%;
+  }
+}

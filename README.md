@@ -2,9 +2,25 @@
 
 统一身份认证通行证系统 - 一个功能完善、设计精美的身份管理与访问控制（IAM）解决方案。
 
-## 项目简介
+[![Version](https://img.shields.io/badge/version-2.1-blue.svg)](https://github.com/yourusername/astro-pass)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Go](https://img.shields.io/badge/Go-1.21+-00ADD8.svg)](https://golang.org/)
+[![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
 
-"星穹通行证"（Astro-Pass）是一个面向未来的身份认证系统，不仅在技术上完全兼容 **OAuth 2.0** 和 **OpenID Connect (OIDC)** 协议，支持 **多因素认证 (MFA)**、**细粒度权限管理** 和全面的**审计日志**，更在用户体验上融入了独特的**二次元学院治愈系**风格。
+## 🌟 项目简介
+
+"星穹通行证"（Astro-Pass）是一个面向未来的**企业级身份认证系统**，完全兼容 **OAuth 2.0** 和 **OpenID Connect (OIDC)** 标准协议，支持 **多因素认证 (MFA)**、**细粒度权限管理** 和全面的**审计日志**，更在用户体验上融入了独特的**二次元学院治愈系**风格。
+
+### ✨ 最新更新（v2.1）
+
+- ✅ **ID Token 支持** - 完整的 OIDC 实现，使用 RS256 非对称加密
+- ✅ **授权同意流程** - 符合 OAuth 2.0 标准的用户授权确认
+- ✅ **Token 管理** - 支持 Token 撤销（RFC 7009）和内省（RFC 7662）
+- ✅ **JWKS 端点** - 提供公钥用于 Token 验证
+- ✅ **OIDC 自动发现** - 标准的 `.well-known/openid-configuration` 端点
+- ✅ **已授权应用管理** - 用户可查看和撤销授权
+
+📖 [查看完整更新日志](docs/功能完善总结.md) | 🚀 [快速开始指南](docs/QUICK_START.md)
 
 ## 技术栈
 

@@ -37,6 +37,13 @@ func main() {
 		utils.Info("Redis初始化完成")
 	}
 
+	// 初始化RSA密钥对（用于JWT签名）
+	if err := utils.InitRSAKeys(); err != nil {
+		utils.Error("RSA密钥初始化失败: %v", err)
+		log.Fatalf("RSA密钥初始化失败: %v", err)
+	}
+	utils.Info("RSA密钥初始化完成")
+
 	// 初始化权限服务（数据库初始化后）
 	// 注意：这里只是预初始化，实际使用时会延迟初始化
 	utils.Info("数据库初始化完成")

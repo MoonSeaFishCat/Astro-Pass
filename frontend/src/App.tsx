@@ -15,6 +15,8 @@ import AuditLogs from './pages/AuditLogs'
 import OAuth2Clients from './pages/OAuth2Clients'
 import Notifications from './pages/Notifications'
 import EmailVerification from './pages/EmailVerification'
+import ConsentPage from './pages/ConsentPage'
+import AuthorizedApps from './pages/AuthorizedApps'
 import AdminLayout from './layouts/AdminLayout'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import UserManagement from './pages/admin/UserManagement'
@@ -127,6 +129,15 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/authorized-apps"
+          element={
+            <PrivateRoute>
+              <AuthorizedApps />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/oauth2/consent" element={<ConsentPage />} />
         {/* 管理员后台路由 */}
         <Route
           path="/admin"

@@ -105,34 +105,44 @@ func (s *OAuth2Service) ClientCredentialsGrant(clientID, clientSecret, scope str
 	return accessToken, nil
 }
 
+// TokenResponse 令牌响应结构
+type TokenResponse struct {
+	AccessToken  string `json:"access_token"`
+	TokenType    string `json:"token_type"`
+	ExpiresIn    int    `json:"expires_in"`
+	RefreshToken string `json:"refresh_token,omitempty"`
+	IDToken      string `json:"id_token,omitempty"`
+	Scope        string `json:"scope,omitempty"`
+}
+
 // ExchangeAuthorizationCode 交换授权码获取令牌
-func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, redirectURI, codeVerifier string) (*models.AccessToken, string, error) {
+func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, redirectURI, codeVerifier string) (*TokenResponse, error) {
 	// 查找授权码
 	var authCode models.AuthorizationCode
 	if err := database.DB.Where("code = ? AND used = ?", code, false).First(&authCode).Error; err != nil {
-		return nil, "", errors.New("无效的授权码")
+		return nil, errors.New("无效的授权码")
 	}
 
 	// 检查是否过期
 	if time.Now().After(authCode.ExpiresAt) {
-		return nil, "", errors.New("授权码已过期")
+		return nil, errors.New("授权码已过期")
 	}
 
 	// 验证客户端
 	var client models.OAuth2Client
 	if err := database.DB.Where("client_id = ? AND status = ?", clientID, "active").First(&client).Error; err != nil {
-		return nil, "", errors.New("无效的客户端")
+		return nil, errors.New("无效的客户端")
 	}
 
 	// 验证客户端密钥
 	if client.ClientSecret != clientSecret {
-		return nil, "", errors.New("客户端密钥错误")
+		return nil, errors.New("客户端密钥错误")
 	}
 
 	// 验证重定向URI
 	var redirectURIs []string
 	if err := json.Unmarshal([]byte(client.RedirectURIs), &redirectURIs); err != nil {
-		return nil, "", errors.New("客户端配置错误")
+		return nil, errors.New("客户端配置错误")
 	}
 
 	redirectURIMatch := false
@@ -143,13 +153,13 @@ func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, 
 		}
 	}
 	if !redirectURIMatch {
-		return nil, "", errors.New("重定向URI不匹配")
+		return nil, errors.New("重定向URI不匹配")
 	}
 
 	// 验证PKCE（如果使用）
 	if authCode.CodeChallenge != "" {
 		if codeVerifier == "" {
-			return nil, "", errors.New("需要提供code_verifier")
+			return nil, errors.New("需要提供code_verifier")
 		}
 		// 这里应该验证code_verifier，简化处理
 	}
@@ -158,26 +168,51 @@ func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, 
 	authCode.Used = true
 	database.DB.Save(&authCode)
 
+	// 获取用户信息
+	var user models.User
+	if err := database.DB.First(&user, authCode.UserID).Error; err != nil {
+		return nil, errors.New("用户不存在")
+	}
+
 	// 生成访问令牌
-	accessTokenString, err := utils.GenerateAccessToken(authCode.UserID, "", "")
+	accessTokenString, err := utils.GenerateAccessToken(authCode.UserID, user.Username, user.Email)
 	if err != nil {
-		return nil, "", errors.New("生成访问令牌失败")
+		return nil, errors.New("生成访问令牌失败")
 	}
 
 	// 生成刷新令牌
 	refreshTokenString, err := utils.GenerateRefreshToken(authCode.UserID)
 	if err != nil {
-		return nil, "", errors.New("生成刷新令牌失败")
+		return nil, errors.New("生成刷新令牌失败")
+	}
+
+	// 生成ID Token（如果scope包含openid）
+	var idTokenString string
+	if containsScope(authCode.Scope, "openid") {
+		issuer := config.Cfg.Server.AppURL
+		idTokenString, err = utils.GenerateIDToken(
+			user.ID,
+			user.Username,
+			user.Email,
+			user.Nickname,
+			user.EmailVerified,
+			"", // nonce应该从授权请求中获取
+			issuer,
+			clientID,
+		)
+		if err != nil {
+			return nil, errors.New("生成ID Token失败")
+		}
 	}
 
 	// 保存访问令牌
 	accessToken := &models.AccessToken{
-		Token:         accessTokenString,
+		Token:          accessTokenString,
 		OAuth2ClientID: client.ID, // 外键
-		ClientID:      clientID,   // OAuth2 标准中的 client_id
-		UserID:        &authCode.UserID,
-		Scope:         authCode.Scope,
-		ExpiresAt:     time.Now().Add(config.Cfg.OAuth2.AccessTokenExpire),
+		ClientID:       clientID,  // OAuth2 标准中的 client_id
+		UserID:         &authCode.UserID,
+		Scope:          authCode.Scope,
+		ExpiresAt:      time.Now().Add(config.Cfg.OAuth2.AccessTokenExpire),
 	}
 	database.DB.Create(accessToken)
 
@@ -190,7 +225,60 @@ func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, 
 	}
 	database.DB.Create(refreshToken)
 
-	return accessToken, refreshTokenString, nil
+	return &TokenResponse{
+		AccessToken:  accessTokenString,
+		TokenType:    "Bearer",
+		ExpiresIn:    int(config.Cfg.OAuth2.AccessTokenExpire.Seconds()),
+		RefreshToken: refreshTokenString,
+		IDToken:      idTokenString,
+		Scope:        authCode.Scope,
+	}, nil
+}
+
+// containsScope 检查scope字符串是否包含指定的scope
+func containsScope(scopeString, targetScope string) bool {
+	if scopeString == "" {
+		return false
+	}
+	scopes := make(map[string]bool)
+	for _, s := range splitScopes(scopeString) {
+		scopes[s] = true
+	}
+	return scopes[targetScope]
+}
+
+// splitScopes 分割scope字符串
+func splitScopes(scopeString string) []string {
+	if scopeString == "" {
+		return []string{}
+	}
+	var scopes []string
+	for _, s := range splitBySpace(scopeString) {
+		if s != "" {
+			scopes = append(scopes, s)
+		}
+	}
+	return scopes
+}
+
+// splitBySpace 按空格分割字符串
+func splitBySpace(s string) []string {
+	var result []string
+	current := ""
+	for _, c := range s {
+		if c == ' ' {
+			if current != "" {
+				result = append(result, current)
+				current = ""
+			}
+		} else {
+			current += string(c)
+		}
+	}
+	if current != "" {
+		result = append(result, current)
+	}
+	return result
 }
 
 // GetUserInfo 获取用户信息（OIDC）

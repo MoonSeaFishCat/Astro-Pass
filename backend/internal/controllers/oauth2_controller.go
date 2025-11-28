@@ -59,7 +59,7 @@ func (c *OAuth2Controller) Authorize(ctx *gin.Context) {
 		return
 	}
 
-	// 检查用户是否已登录（这里简化处理，实际应该检查session）
+	// 检查用户是否已登录
 	userID, exists := ctx.Get("user_id")
 	if !exists {
 		// 重定向到登录页面
@@ -68,6 +68,38 @@ func (c *OAuth2Controller) Authorize(ctx *gin.Context) {
 			"message": "请先登录",
 			"login_url": "/api/auth/login",
 		})
+		return
+	}
+
+	// 检查是否已经批准过授权
+	consentService := services.NewConsentService()
+	hasConsent, err := consentService.CheckConsent(userID.(uint), req.ClientID, req.Scope)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"code":    500,
+			"message": "检查授权失败",
+		})
+		return
+	}
+
+	// 检查是否是从同意页面返回的
+	consentApproved := ctx.Query("consent")
+	
+	// 如果没有授权且不是从同意页面返回，重定向到同意页面
+	if !hasConsent && consentApproved != "approved" {
+		// 构建同意页面URL
+		consentURL := "/oauth2/consent?response_type=" + req.ResponseType +
+			"&client_id=" + req.ClientID +
+			"&redirect_uri=" + req.RedirectURI +
+			"&scope=" + req.Scope +
+			"&state=" + req.State
+		
+		if req.CodeChallenge != "" {
+			consentURL += "&code_challenge=" + req.CodeChallenge +
+				"&code_challenge_method=" + req.CodeChallengeMethod
+		}
+
+		ctx.Redirect(http.StatusFound, consentURL)
 		return
 	}
 
@@ -141,7 +173,7 @@ func (c *OAuth2Controller) Token(ctx *gin.Context) {
 
 	if req.GrantType == "authorization_code" {
 		// 交换授权码
-		accessToken, refreshToken, err := c.oauth2Service.ExchangeAuthorizationCode(
+		tokenResponse, err := c.oauth2Service.ExchangeAuthorizationCode(
 			req.Code,
 			req.ClientID,
 			req.ClientSecret,
@@ -150,23 +182,39 @@ func (c *OAuth2Controller) Token(ctx *gin.Context) {
 		)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
-				"code":    400,
-				"message": err.Error(),
+				"error":             "invalid_grant",
+				"error_description": err.Error(),
+			})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, tokenResponse)
+	} else if req.GrantType == "refresh_token" {
+		// 刷新令牌
+		refreshToken := ctx.PostForm("refresh_token")
+		if refreshToken == "" {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error":             "invalid_request",
+				"error_description": "refresh_token is required",
+			})
+			return
+		}
+
+		tokenService := services.NewTokenService()
+		newAccessToken, newRefreshToken, err := tokenService.RefreshAccessToken(refreshToken)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error":             "invalid_grant",
+				"error_description": err.Error(),
 			})
 			return
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{
-			"access_token":  accessToken.Token,
+			"access_token":  newAccessToken,
 			"token_type":    "Bearer",
-			"expires_in":    900, // 15分钟
-			"refresh_token": refreshToken,
-			"scope":         accessToken.Scope,
-		})
-	} else {
-		// 刷新令牌逻辑（可以复用auth_service的RefreshToken方法）
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "刷新令牌功能（待完善）",
+			"expires_in":    900,
+			"refresh_token": newRefreshToken,
 		})
 	}
 }

@@ -85,6 +85,7 @@ func AutoMigrate() error {
 		{&models.Notification{}, "通知表"},
 		{&models.BackupRecord{}, "备份记录表"},
 		{&models.SystemConfig{}, "系统配置表"},
+		{&models.UserConsent{}, "用户授权同意表"},
 	}
 
 	// 先迁移基础表

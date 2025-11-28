@@ -134,12 +134,15 @@ func SetupRoutes() *gin.Engine {
 
 		// OAuth2/OIDC路由
 		oauth2Controller := controllers.NewOAuth2Controller()
+		tokenController := controllers.NewTokenController()
 		oauth2 := api.Group("/oauth2")
 		{
 			oauth2.GET("/authorize", middleware.AuthMiddleware(), oauth2Controller.Authorize)
 			oauth2.POST("/token", oauth2Controller.Token)
 			oauth2.GET("/userinfo", oauth2Controller.UserInfo)
-			oauth2.GET("/jwks", oauth2Controller.JWKS)
+			oauth2.GET("/jwks", tokenController.GetJWKS)
+			oauth2.POST("/revoke", tokenController.RevokeToken)
+			oauth2.POST("/introspect", tokenController.IntrospectToken)
 		}
 
 		// OAuth2客户端管理路由
@@ -152,16 +155,19 @@ func SetupRoutes() *gin.Engine {
 			oauth2Clients.DELETE("/:id", oauth2ClientController.RevokeClient)
 		}
 
+		// 授权同意路由
+		consentController := controllers.NewConsentController()
+		consent := api.Group("/oauth2/consent")
+		{
+			consent.GET("/info", consentController.GetConsentInfo)
+			consent.POST("/approve", middleware.AuthMiddleware(), consentController.ApproveConsent)
+			consent.POST("/deny", middleware.AuthMiddleware(), consentController.DenyConsent)
+			consent.GET("/list", middleware.AuthMiddleware(), consentController.GetUserConsents)
+			consent.DELETE("/:client_id", middleware.AuthMiddleware(), consentController.RevokeConsent)
+		}
+
 		// OIDC发现端点
-		router.GET("/.well-known/openid-configuration", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"issuer":                 "http://localhost:8080",
-				"authorization_endpoint": "http://localhost:8080/api/oauth2/authorize",
-				"token_endpoint":         "http://localhost:8080/api/oauth2/token",
-				"userinfo_endpoint":      "http://localhost:8080/api/oauth2/userinfo",
-				"jwks_uri":               "http://localhost:8080/api/oauth2/jwks",
-			})
-		})
+		router.GET("/.well-known/openid-configuration", tokenController.GetOpenIDConfiguration)
 
 		// WebAuthn路由
 		webauthnController := controllers.NewWebAuthnController()
