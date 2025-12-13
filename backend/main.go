@@ -60,7 +60,13 @@ func main() {
 	scheduler := utils.NewScheduler()
 	scheduler.Start()
 	defer scheduler.Stop()
-	utils.Info("定时任务调度器已启动")
+	utils.Info("基础调度器已启动")
+
+	// 启动业务调度服务
+	businessScheduler := services.NewSchedulerService()
+	businessScheduler.Start()
+	defer businessScheduler.Stop()
+	utils.Info("业务调度服务已启动")
 
 	// 设置Gin模式
 	if config.Cfg.Server.Mode == "release" {

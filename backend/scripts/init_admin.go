@@ -95,6 +95,8 @@ func main() {
 		{Name: "audit:read", DisplayName: "查看审计日志", Resource: "audit", Action: "read", Description: "查看审计日志"},
 		{Name: "backup:manage", DisplayName: "备份管理", Resource: "backup", Action: "manage", Description: "管理数据库备份"},
 		{Name: "config:manage", DisplayName: "配置管理", Resource: "config", Action: "manage", Description: "管理系统配置"},
+		{Name: "sso:manage", DisplayName: "SSO管理", Resource: "sso", Action: "manage", Description: "管理单点登录会话"},
+		{Name: "saml:manage", DisplayName: "SAML管理", Resource: "saml", Action: "manage", Description: "管理SAML配置"},
 	}
 
 	fmt.Println("\n创建基础权限...")

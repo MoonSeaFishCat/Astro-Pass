@@ -189,7 +189,7 @@ func (s *OAuth2Service) ExchangeAuthorizationCode(code, clientID, clientSecret, 
 	// 生成ID Token（如果scope包含openid）
 	var idTokenString string
 	if containsScope(authCode.Scope, "openid") {
-		issuer := config.Cfg.Server.AppURL
+		issuer := config.Cfg.App.URL
 		idTokenString, err = utils.GenerateIDToken(
 			user.ID,
 			user.Username,

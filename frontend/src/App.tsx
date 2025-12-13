@@ -17,6 +17,7 @@ import Notifications from './pages/Notifications'
 import EmailVerification from './pages/EmailVerification'
 import ConsentPage from './pages/ConsentPage'
 import AuthorizedApps from './pages/AuthorizedApps'
+import SSOSessions from './pages/SSOSessions'
 import AdminLayout from './layouts/AdminLayout'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import UserManagement from './pages/admin/UserManagement'
@@ -24,6 +25,7 @@ import RoleManagement from './pages/admin/RoleManagement'
 import PermissionManagement from './pages/admin/PermissionManagement'
 import SystemSettings from './pages/admin/SystemSettings'
 import BackupManagement from './pages/admin/BackupManagement'
+import SAMLManagement from './pages/admin/SAMLManagement'
 import './App.css'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -137,6 +139,14 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/sso-sessions"
+          element={
+            <PrivateRoute>
+              <SSOSessions />
+            </PrivateRoute>
+          }
+        />
         <Route path="/oauth2/consent" element={<ConsentPage />} />
         {/* 管理员后台路由 */}
         <Route
@@ -215,6 +225,16 @@ function App() {
             <AdminRoute>
               <AdminLayout>
                 <BackupManagement />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/saml"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <SAMLManagement />
               </AdminLayout>
             </AdminRoute>
           }

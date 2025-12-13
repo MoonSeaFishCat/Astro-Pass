@@ -86,6 +86,12 @@ func AutoMigrate() error {
 		{&models.BackupRecord{}, "备份记录表"},
 		{&models.SystemConfig{}, "系统配置表"},
 		{&models.UserConsent{}, "用户授权同意表"},
+		{&models.SSOSession{}, "SSO会话表"},
+		{&models.LogoutRequest{}, "登出请求表"},
+		{&models.LogoutNotification{}, "登出通知表"},
+		{&models.SAMLConfig{}, "SAML配置表"},
+		{&models.SAMLRequest{}, "SAML请求表"},
+		{&models.SAMLAssertion{}, "SAML断言表"},
 	}
 
 	// 先迁移基础表

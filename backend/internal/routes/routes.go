@@ -25,8 +25,8 @@ func SetupRoutes() *gin.Engine {
 	config.AllowCredentials = true
 	router.Use(cors.New(config))
 
-	// 速率限制（对认证相关接口更严格）
-	router.Use(middleware.RateLimitMiddleware(60)) // 每分钟60次
+	// 速率限制（全局限制）
+	router.Use(middleware.RateLimitMiddleware(120)) // 每分钟120次
 
 	// 健康检查
 	healthController := controllers.NewHealthController()
@@ -39,10 +39,10 @@ func SetupRoutes() *gin.Engine {
 	// API路由组
 	api := router.Group("/api")
 	{
-		// 认证相关路由（更严格的速率限制）
+		// 认证相关路由（适度的速率限制）
 		authController := controllers.NewAuthController()
 		auth := api.Group("/auth")
-		auth.Use(middleware.RateLimitMiddleware(10)) // 每分钟10次
+		auth.Use(middleware.RateLimitMiddleware(30)) // 每分钟30次
 		{
 			auth.POST("/register", authController.Register)
 			auth.POST("/login", authController.Login)
@@ -244,6 +244,51 @@ func SetupRoutes() *gin.Engine {
 			systemConfig.PUT("/backup", systemConfigController.UpdateBackupConfig)
 			systemConfig.GET("/export", systemConfigController.ExportConfigs)
 			systemConfig.POST("/import", systemConfigController.ImportConfigs)
+		}
+
+		// SSO单点登出路由
+		sloController := controllers.NewSLOController()
+		sso := api.Group("/sso")
+		{
+			sso.POST("/logout", middleware.AuthMiddleware(), sloController.InitiateLogout)
+			sso.GET("/sessions", middleware.AuthMiddleware(), sloController.GetUserSessions)
+			sso.GET("/logout/:request_id/status", middleware.AuthMiddleware(), sloController.GetLogoutStatus)
+			sso.POST("/logout/callback", sloController.HandleLogoutCallback)
+		}
+
+		// 管理员SSO管理路由
+		adminSSO := api.Group("/admin/sso")
+		adminSSO.Use(middleware.AuthMiddleware())
+		adminSSO.Use(middleware.PermissionMiddleware("sso", "manage"))
+		{
+			adminSSO.POST("/users/:user_id/revoke-sessions", sloController.AdminRevokeUserSessions)
+		}
+
+		// OIDC登出端点
+		oidc := api.Group("/oidc")
+		{
+			oidc.GET("/logout", sloController.GetOIDCLogout)
+		}
+
+		// SAML路由
+		samlController := controllers.NewSAMLController()
+		saml := api.Group("/saml")
+		{
+			saml.GET("/metadata", samlController.GetMetadata)
+			saml.GET("/sso", samlController.HandleSSO)
+			saml.POST("/sso", samlController.HandleSSO)
+			saml.GET("/login-complete", middleware.AuthMiddleware(), samlController.HandleSAMLLogin)
+		}
+
+		// 管理员SAML配置路由
+		adminSAML := api.Group("/admin/saml")
+		adminSAML.Use(middleware.AuthMiddleware())
+		adminSAML.Use(middleware.PermissionMiddleware("saml", "manage"))
+		{
+			adminSAML.POST("/configs", samlController.CreateSAMLConfig)
+			adminSAML.GET("/configs", samlController.GetSAMLConfigs)
+			adminSAML.PUT("/configs/:id", samlController.UpdateSAMLConfig)
+			adminSAML.DELETE("/configs/:id", samlController.DeleteSAMLConfig)
 		}
 	}
 

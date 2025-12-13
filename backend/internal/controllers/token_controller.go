@@ -83,7 +83,7 @@ func (tc *TokenController) RevokeToken(c *gin.Context) {
 // IntrospectToken 令牌内省（RFC 7662）
 func (tc *TokenController) IntrospectToken(c *gin.Context) {
 	token := c.PostForm("token")
-	tokenTypeHint := c.PostForm("token_type_hint")
+	_ = c.PostForm("token_type_hint") // token_type_hint 是可选参数，暂时不使用
 
 	if token == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -126,8 +126,8 @@ func (tc *TokenController) GetJWKS(c *gin.Context) {
 		return
 	}
 
-	// 将RSA公钥转换为JWK格式
-	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publicKey)
+	// 将RSA公钥转换为JWK格式（暂时不使用，但保留用于未来扩展）
+	_, err := x509.MarshalPKIXPublicKey(publicKey)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "failed to marshal public key",

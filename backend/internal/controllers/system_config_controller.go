@@ -24,7 +24,7 @@ func (c *SystemConfigController) GetAllConfigs(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "获取成功", configs)
+	utils.SuccessWithMessage(ctx, "获取成功", configs)
 }
 
 // GetConfigsByCategory 按分类获取配置
@@ -37,7 +37,7 @@ func (c *SystemConfigController) GetConfigsByCategory(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "获取成功", configs)
+	utils.SuccessWithMessage(ctx, "获取成功", configs)
 }
 
 // UpdateConfig 更新配置
@@ -69,7 +69,7 @@ func (c *SystemConfigController) UpdateConfig(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "更新成功", nil)
+	utils.SuccessWithMessage(ctx, "更新成功", nil)
 }
 
 // GetBackupConfig 获取备份配置
@@ -80,7 +80,7 @@ func (c *SystemConfigController) GetBackupConfig(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "获取成功", config)
+	utils.SuccessWithMessage(ctx, "获取成功", config)
 }
 
 // UpdateBackupConfig 更新备份配置
@@ -102,7 +102,7 @@ func (c *SystemConfigController) UpdateBackupConfig(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "更新成功", nil)
+	utils.SuccessWithMessage(ctx, "更新成功", nil)
 }
 
 // ExportConfigs 导出配置
@@ -134,5 +134,5 @@ func (c *SystemConfigController) ImportConfigs(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "导入成功", nil)
+	utils.SuccessWithMessage(ctx, "导入成功", nil)
 }

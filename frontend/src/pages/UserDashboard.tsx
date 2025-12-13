@@ -9,6 +9,7 @@ const sections = [
   { id: 'profile', label: '信息总览', hint: '查看基础资料与联系方式' },
   { id: 'security', label: '安全中心', hint: '守护账户的每一次心跳' },
   { id: 'sessions', label: '会话守护', hint: '随时掌握登录设备' },
+  { id: 'sso', label: 'SSO会话', hint: '管理单点登录会话' },
   { id: 'notifications', label: '信箱与通知', hint: '邮箱验证与通知中心' },
 ]
 
@@ -183,6 +184,32 @@ export default function UserDashboard() {
                 </div>
                 <Link to="/sessions">
                   <Button variant="outline">查看全部</Button>
+                </Link>
+              </div>
+            </Card>
+          </section>
+
+          <section id="sso" className="user-section">
+            <div className="section-header">
+              <div>
+                <h2>SSO会话管理</h2>
+                <p>管理您在各个应用中的单点登录会话，一键安全登出。</p>
+              </div>
+              <Link to="/sso-sessions">
+                <Button variant="secondary">管理SSO会话</Button>
+              </Link>
+            </div>
+            <Card className="section-card">
+              <p className="card-description">
+                单点登录让您可以使用一个账户访问多个应用。在这里可以查看和管理所有已登录的应用会话。
+              </p>
+              <div className="session-highlight">
+                <div>
+                  <div className="session-title">统一身份认证</div>
+                  <div className="session-meta">安全便捷的单点登录体验</div>
+                </div>
+                <Link to="/sso-sessions">
+                  <Button variant="outline">查看SSO会话</Button>
                 </Link>
               </div>
             </Card>

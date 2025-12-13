@@ -28,7 +28,7 @@ func (c *BackupController) CreateBackup(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "备份创建成功", record)
+	utils.SuccessWithMessage(ctx, "备份创建成功", record)
 }
 
 // GetBackupList 获取备份列表
@@ -49,7 +49,7 @@ func (c *BackupController) GetBackupList(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "获取成功", gin.H{
+	utils.SuccessWithMessage(ctx, "获取成功", gin.H{
 		"backups":   records,
 		"total":     total,
 		"page":      page,
@@ -72,7 +72,7 @@ func (c *BackupController) DeleteBackup(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "删除成功", nil)
+	utils.SuccessWithMessage(ctx, "删除成功", nil)
 }
 
 // RestoreBackup 恢复备份
@@ -90,7 +90,7 @@ func (c *BackupController) RestoreBackup(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "恢复成功", nil)
+	utils.SuccessWithMessage(ctx, "恢复成功", nil)
 }
 
 // DownloadBackup 下载备份
@@ -118,7 +118,7 @@ func (c *BackupController) GetBackupStats(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "获取成功", stats)
+	utils.SuccessWithMessage(ctx, "获取成功", stats)
 }
 
 // CleanOldBackups 清理旧备份
@@ -130,5 +130,5 @@ func (c *BackupController) CleanOldBackups(ctx *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(ctx, "清理成功", nil)
+	utils.SuccessWithMessage(ctx, "清理成功", nil)
 }
